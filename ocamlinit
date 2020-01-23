@@ -1,0 +1,133 @@
+(* Added by OPAM. *)
+let () =
+  try Topdirs.dir_directory (Sys.getenv "OCAML_TOPLEVEL_PATH")
+  with Not_found -> ()
+;;
+
+(* ## added by OPAM user-setup for ocamltop / base ## 3ec62baf6f9c219ae06d9814069da862 ## you can edit, but keep this line
+  *)
+#use "topfind";;
+
+(* ## end of OPAM user-setup addition for ocamltop / base ## keep this line *)
+
+(*  The following was commented out 1/23/20.
+    Restore something like this for CSCI 1103.
+
+#require "universe";;
+
+(* The following pulls the Assert, Code and Wav modules into the top-level REPL.
+ *)
+#directory "/Users/muller/csci1103/lib/";; (* "/Users/muller/cs3366/lib/";; *)
+#load "assert.cma";;
+#load "code.cma";;
+#load "wav.cma";;
+*)
+module Assert =
+  struct
+  
+(* When set to true, stop immediately on a failing test *)
+let stop_on_failure_flag = ref false
+
+let stop_on_failure () = stop_on_failure_flag := true
+
+let error_mesg (s: string) =
+  print_endline s;
+  if !stop_on_failure_flag then exit 1 else ()
+
+type result = Succ | Fail | Err of string
+
+let assert_eqf (msg: string) actual_fcn expected : unit =
+  let _ = print_string ("Running: "^msg^" ... ") in
+  let _ = flush_all () in
+  let outcome = try if expected = (actual_fcn ()) then Succ else Fail
+                with Failure s -> Err s
+                   | e         -> Err (Printexc.to_string e) in
+
+  begin match outcome with
+             | Succ -> print_endline ("Test passed!")
+             | Fail ->
+                print_newline ();
+                error_mesg ("Test failed: "^msg^"\n")
+             | Err s ->
+                print_newline ();
+                error_mesg ("Test error: `"^msg^"` reported `" ^ s ^ "`\n")
+            end
+
+let assert_eq (msg:string) actual expected : unit =
+  assert_eqf msg (fun () -> actual) expected
+
+let run_test msg f = assert_eqf msg f true
+
+let run_failing_test msg f =
+  let _ = print_string ("Running: "^msg^" ... ") in
+  let _ = flush_all () in
+  let result = (try (ignore (f ()) ; Fail) with
+  | _ -> Succ) in
+  match result with
+  | Succ -> print_endline ("Test passed!")
+  | Fail -> error_mesg ("Test error: should have failed.")
+  | Err _ -> error_mesg ("run_failing_test BUG: shouldn't get here.")
+
+  end
+  
+module Lib =
+  struct
+
+let fresh =
+  let counter = ref 0
+  in
+  (fun () ->
+     let answer = !counter
+     in
+     counter := !counter + 1;
+     answer)
+
+let i2S = string_of_int
+let i2F = float_of_int
+
+let f2S = string_of_float
+let f2I = int_of_float
+
+let fmt = Printf.sprintf
+let pfmt = Printf.printf
+
+let (%) m n = m mod n
+let pi = acos (-. 1.0)
+
+let closeEnough ?(error=1e-6) a b = abs_float (a -. b) < error
+
+let range n =
+  let rec repeat n answer =
+    match n = 0 with
+    | true  -> answer
+    | false ->
+      let m = n - 1
+      in
+      repeat m (m :: answer)
+  in
+  repeat n []
+
+let explode s =
+  let n = String.length s in
+  let rec repeat i =
+    match i = n with
+    | true  -> []
+    | false -> s.[i] :: repeat (i + 1)
+  in
+  repeat 0
+
+  let implode chars =
+    let res = Bytes.create (List.length chars) in
+    let rec repeat i chars =
+      match chars with
+      | [] -> res
+      | char :: chars ->
+         Bytes.set res i char;
+         repeat (i + 1) chars
+    in
+    Bytes.to_string (repeat 0 chars)
+
+  let run_test : string -> (unit -> bool) -> unit
+    = Assert.run_test
+
+    end
