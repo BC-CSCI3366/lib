@@ -10,5 +10,5 @@ REPL is to clone this repo.
 > cd csci3366
 > git clone https://github.com/BC-CSCI3366/lib.git
 > cd lib
-> mv ocamlinit ~/.ocamlinit
+> cp ocamlinit ~/.ocamlinit
 ```
