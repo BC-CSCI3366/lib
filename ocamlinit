@@ -8,6 +8,8 @@ let () =
   *)
 #use "topfind";;
 
+#load "unix.cma";;
+
 (* ## end of OPAM user-setup addition for ocamltop / base ## keep this line *)
 
 (*  The following was commented out 1/23/20.
