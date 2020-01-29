@@ -4,9 +4,9 @@ This repository has two resources that support the execution of OCaml code in a 
 
 > **NOTE**: The instructions below assume the student is enrolled in CSCI 1103 Computer Science 1 Honors. Students enrolled in CSCI 3366 Programming Languages should make the obvious adjustments.
 
-#### 0. Cloning this Repo
+#### 0. Cloning this lib Repository
 
-We assume that you've made a course home folder `csci1103` or `csci3366` in your home directory. If you've named it something else or placed it someplace else, you'll need to make adjustments to several of the commands below.
+The first step is to clone this course lib repository. We assume that you've already made a course home folder `csci1103` or `csci3366` in your home directory. If you've named it something else or placed it someplace else, you'll need to make adjustments to several of the commands below. In a Unix shell type
 
 ```bash
 > cd
@@ -36,9 +36,7 @@ The `Lib` module has a number of resources that are useful in the course. Proble
 
 ```bash
 > cd
-> cd csci1103    #   or csci3366
-> git clone https://github.com/BC-CSCI1103/lib.git      # or BC-CSCI3366
-> cd lib
+> cd csci1103/lib    #   or csci3366
 > cp ocamlinit ~/.ocamlinit
 ```
 
