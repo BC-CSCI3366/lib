@@ -6,7 +6,9 @@ This repository has two resources that support the execution of OCaml code in a 
 
 #### 0. Cloning this lib Repository
 
-The first step is to clone this course lib repository. We assume that you've already made a course home folder `csci1103` or `csci3366` in your home directory. If you've named it something else or placed it someplace else, you'll need to make adjustments to several of the commands below. In a Unix shell type
+The first step is to clone this course lib repository. We assume that you've already made a course home folder `csci1103` or `csci3366` in your home directory. If you've named it something else or placed it someplace else, you'll need to make adjustments to several of the commands below. 
+
+In a Unix shell type
 
 ```bash
 > cd
